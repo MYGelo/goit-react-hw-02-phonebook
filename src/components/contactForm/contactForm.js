@@ -10,15 +10,7 @@ export class ContactForm extends Component {
       }
     nameInputId = nanoid();
     numberInputId = nanoid();
-
-        constructor () {
-      super();
-         this.handleChange = this.handleChange.bind(this);
-         this.handleSubmit = this.handleSubmit.bind(this);
-         this.reset = this.reset.bind(this);
-
-     }  
-     
+    
      handleChange = e => {
         const {name, value} = e.target;
         this.setState({ [name]: value });

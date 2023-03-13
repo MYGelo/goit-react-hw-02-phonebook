@@ -40,18 +40,25 @@ export class App extends Component {
     const contact = {id, ...data};
     const contactLists = [...this.state.contacts];
     
-    if (contactLists.findIndex(item => item.name.toLowerCase() === contact.name.toLowerCase()) !== -1) {
+    if(contactLists.find(item => item.name.toLowerCase() === contact.name.toLowerCase())) {
       return alert(`${contact.name} is already in contacts.`);
     } 
-    else if(contactLists.find(item => item.number === contact.number)) {
+    if(contactLists.find(item => item.number === contact.number)) {
       return alert(`${contact.number} is already in contacts.`);
-    } else {
-      contactLists.push(contact);
-    }
+    } 
+    
+    contactLists.push(contact);
+     
 
-    this.setState({contacts: contactLists});
-    console.log(contactLists);
+    // this.setState({contacts: contactLists});
+    this.setState(prevState => {
+      return {
+        contacts: [...prevState.contacts, ...contactLists]
+      }
+    })
   };
+
+  
 
   onDelete = e => {
     this.setState(prevState => ({
