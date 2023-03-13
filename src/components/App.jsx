@@ -25,12 +25,8 @@ export class App extends Component {
     const {filter, contacts} = this.state;
     const newContactList = contacts.filter(contact => {
       return (
-        
-      // contact.number.includes(filter),
       contact.name.toLowerCase().includes(filter.toLowerCase())
       )
-      
-
     })
     return newContactList;
   };
@@ -38,27 +34,21 @@ export class App extends Component {
   onSubmitForm = data => {
     const id = nanoid();
     const contact = {id, ...data};
-    const contactLists = [...this.state.contacts];
-    
-    if(contactLists.find(item => item.name.toLowerCase() === contact.name.toLowerCase())) {
-      return alert(`${contact.name} is already in contacts.`);
-    } 
-    if(contactLists.find(item => item.number === contact.number)) {
-      return alert(`${contact.number} is already in contacts.`);
-    } 
-    
-    contactLists.push(contact);
-     
-
-    // this.setState({contacts: contactLists});
-    this.setState(prevState => {
-      return {
-        contacts: [...prevState.contacts, ...contactLists]
-      }
-    })
-  };
-
   
+    this.setState(prevState => {
+      const contactExists = prevState.contacts.some(item => item.name.toLowerCase() === contact.name.toLowerCase());
+
+      if (contactExists) {
+        alert(`${contact.name} is already in contacts.`);
+        return prevState; } 
+        
+      else {
+        return {
+          contacts: [...prevState.contacts, contact],
+        };
+      }
+    });
+  };
 
   onDelete = e => {
     this.setState(prevState => ({
@@ -66,7 +56,6 @@ export class App extends Component {
     }));
   }
 
- 
   render () {
     
     const {filter} = this.state;
@@ -94,7 +83,6 @@ export class App extends Component {
          onDelete={this.onDelete}
          />
       </div>
-      
     )
   }
 
