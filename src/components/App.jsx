@@ -34,15 +34,14 @@ export class App extends Component {
   onSubmitForm = data => {
     const id = nanoid();
     const contact = {id, ...data};
-  
-    this.setState(prevState => {
-      const contactExists = prevState.contacts.some(item => item.name.toLowerCase() === contact.name.toLowerCase());
+    const contactExists = this.state.contacts.find(item => item.name.toLowerCase() === contact.name.toLowerCase());
 
       if (contactExists) {
         alert(`${contact.name} is already in contacts.`);
-        return prevState; } 
-        
-      else {
+        return ;
+      } 
+    
+    this.setState(prevState => {
         return {
           contacts: [...prevState.contacts, contact],
         };
